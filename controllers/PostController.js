@@ -46,15 +46,17 @@ export const getOne = (req, res) => {
       {
         returnDocument: "after",
       }
-    ).then((post) => {
-      if (!post) {
-        return res.status(404).json({
-          message: "Статья не найдена",
-        });
-      }
+    )
+      .populate("user")
+      .then((post) => {
+        if (!post) {
+          return res.status(404).json({
+            message: "Статья не найдена",
+          });
+        }
 
-      res.json(post);
-    });
+        res.json(post);
+      });
   } catch (err) {
     console.log(err);
     res.status(500).json({
